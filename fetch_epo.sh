@@ -1,4 +1,4 @@
-_!/bin/bash
+#!/bin/bash
 
 # Delete file from previous run.
 rm /home/<user>/epo_export/epo
