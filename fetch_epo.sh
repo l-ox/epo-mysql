@@ -1,10 +1,10 @@
-!/bin/bash
+_!/bin/bash
 
 # Delete file from previous run.
 rm /home/<user>/epo_export/epo
 
 # Fetch new export from ePO via REST API.
-curl -k -u "<username>:<password>" "https://<epo_ip>:8443/remote/core.executeQuery?queryId=<id>&:output=json">> /home/<user>/epo_export/epo.json
+curl -k -u "<epo_username>:<epo_password>" "https://<epo_ip>:8443/remote/core.executeQuery?queryId=<id>&:output=json">> /home/<user>/epo_export/epo.json
 
 # Format into CSV.
 tail -n +2 /home/<user>/epo_export/epo.json > /home/<user>/epo_export/epo.tmp && mv /home/<user>/epo_export/epo.tmp /home/<user>/epo_export/epo.json
@@ -18,7 +18,7 @@ rm /home/<user>/epo_export/epo.tmp
 rm /home/<user>/epo_export/epo.tmp2
 
 # Truncate the existing data in the table.
-mysql --user=<username> --password=<password> <database> -e "TRUNCATE TABLE <table_name>;"
+mysql --user=<mysql_username> --password=<mysql_password> <database> -e "TRUNCATE TABLE <table_name>;"
 
 # Import the final CSV file into the MySQL table.
-mysql --user=<username> --password=<password> <database> -e "LOAD DATA LOCAL INFILE '/home/<user>/epo_export/epo' INTO TABLE tab_epo FIELDS TERMINATED BY ',' ENCLOSED BY '\"' LINES TERMINATED BY '\n' IGNORE 1 ROWS;"
+mysql --user=<mysql_username> --password=<mysql_password> <database> -e "LOAD DATA LOCAL INFILE '/home/<user>/epo_export/epo' INTO TABLE <table> FIELDS TERMINATED BY ',' ENCLOSED BY '\"' LINES TERMINATED BY '\n' IGNORE 1 ROWS;"
