@@ -18,7 +18,7 @@ rm /home/<user>/epo_export/epo.tmp
 rm /home/<user>/epo_export/epo.tmp2
 
 # Truncate the existing data in the table.
-mysql --user=<mysql_username> --password=<mysql_password> <database> -e "TRUNCATE TABLE <table_name>;"
+mysql --user=<mysql_username> --password=<mysql_password> <database> -e "TRUNCATE TABLE <table>;"
 
 # Import the final CSV file into the MySQL table.
 mysql --user=<mysql_username> --password=<mysql_password> <database> -e "LOAD DATA LOCAL INFILE '/home/<user>/epo_export/epo' INTO TABLE <table> FIELDS TERMINATED BY ',' ENCLOSED BY '\"' LINES TERMINATED BY '\n' IGNORE 1 ROWS;"
